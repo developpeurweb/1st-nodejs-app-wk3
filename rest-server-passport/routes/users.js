@@ -5,10 +5,11 @@ var User = require('../models/user');
 var Verify    = require('./verify');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
   res.send('respond with a resource');
 });
 
+//Registration
 router.post('/register', function(req, res) {
     User.register(new User({ username : req.body.username }),
       req.body.password, function(err, user) {
@@ -21,6 +22,7 @@ router.post('/register', function(req, res) {
     });
 });
 
+//Login
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) {
@@ -48,6 +50,7 @@ router.post('/login', function(req, res, next) {
   })(req,res,next);
 });
 
+//Logout
 router.get('/logout', function(req, res) {
     req.logout();
   res.status(200).json({
