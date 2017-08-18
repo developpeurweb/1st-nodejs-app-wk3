@@ -4,9 +4,12 @@ var passport = require('passport');
 var User = require('../models/user');
 var Verify    = require('./verify');
 
-/* GET users listing. */
+/* GET users assignment 3 */
 router.get('/', Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
-  res.send('respond with a resource');
+    User.find({}, function (err, users) {
+        if (err) throw err;
+        res.json(users);
+    });
 });
 
 //Registration

@@ -15,7 +15,7 @@ promotionRouter.route('/')
     });
 })
 
-.post(Verify.verifyOrdinaryUser, function (req, res, next) {
+.post(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
     Promotions.create(req.body, function (err, promotion) {
         if (err) throw err;
         console.log('Promotion created!');
@@ -28,7 +28,7 @@ promotionRouter.route('/')
     });
 })
 
-.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
+.delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
     Promotions.remove({}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
